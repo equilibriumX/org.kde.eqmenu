@@ -76,6 +76,21 @@ EmptyPage {
      * It is therefore safer to use Keys for items whose position in the Tab
      * order must be changed on demand. (Tested with Qt 5.15.8 on X11.)
      */
+// Veza koja osigurava da se pri otvaranju menija uvek primeni podešavanje "Open launcher in:"
+    Connections {
+        target: Plasmoid
+        function onExpandedChanged() {
+            if (Plasmoid.expanded) {
+                let targetIndex = Plasmoid.configuration.startWith !== undefined ? Plasmoid.configuration.startWith : 0;
+
+                // Kada se meni otvori, forsira se izabrani početni tab iz podešavanja
+                if (contentItemStackView.currentItem.objectName === "normalPage" && normalPage.footer && normalPage.footer.tabBar) {
+                    normalPage.footer.tabBar.currentIndex = targetIndex;
+                }
+            }
+        }
+    }
+
 
     header: FullRepresentationHeader {
         id: header
