@@ -17,6 +17,12 @@
         <entry key="startWith" type="int">
             <default>0</default>
         </entry>
+        <entry key="useCustomFilter" type="bool">
+            <default>false</default>
+        </entry>
+        <entry key="historySubFilter" type="int">
+            <default>0</default>
+        </entry>
         <entry key="powerActions" type="stringlist">
             <default>suspend,hibernate,reboot,shutdown</default>
         </entry>
@@ -83,3 +89,4 @@
         </entry>
     </group>
 </kcfg>
+
