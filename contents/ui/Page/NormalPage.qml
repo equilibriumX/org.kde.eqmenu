@@ -63,17 +63,38 @@ EmptyPage {
                         }
                     }
                 }
-
-                contentAreaComponent: KickoffListView {
+contentAreaComponent: KickoffListView {
                     id: contentArea
                     mainContentView: true
                     focus: true
                     objectName: "frequentlyUsedView"
-                    model: switch (rightBasePage.sidebarItem.currentIndex) {
-                        case 0: return kickoff.recentUsageModel
-                    }
-                    onActiveFocusChanged: if (activeFocus && count < 1) {
-                        rightBasePage.sidebarItem.forceActiveFocus()
+
+                    model: {
+                        let useCustom = Plasmoid.configuration.useCustomFilter !== undefined ? Plasmoid.configuration.useCustomFilter : false;
+
+                        if (!useCustom) {
+                            return kickoff.recentUsageModel !== undefined ? kickoff.recentUsageModel : root.allUsageModel;
+                        }
+
+                        let subFilter = Plasmoid.configuration.historySubFilter !== undefined ? Plasmoid.configuration.historySubFilter : 0;
+
+                        if (subFilter === 2) {
+                            return kickoff.computerModel;
+                        }
+
+                        // Sigurno instanciranje modela sa obezbeđenim favoritesModel-om
+                        let usageModel = Qt.createQmlObject('import org.kde.plasma.private.kicker as Kicker; Kicker.RecentUsageModel { favoritesModel: rootModel.favoritesModel }', contentArea);
+
+                        if (usageModel) {
+                            if (subFilter === 0) {
+                                usageModel.shownItems = Kicker.RecentUsageModel.OnlyApps;
+                            } else if (subFilter === 1) {
+                                usageModel.shownItems = Kicker.RecentUsageModel.OnlyDocs;
+                            }
+                            return usageModel;
+                        }
+
+                        return kickoff.recentUsageModel;
                     }
                 }
 
