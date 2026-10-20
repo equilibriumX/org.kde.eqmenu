@@ -23,7 +23,7 @@ import "../View"
 EmptyPage {
     id: root
 
-    readonly property int defaultIndex: kickoff.startWidth
+    readonly property int defaultIndex: Plasmoid.configuration.startWith !== undefined ? Plasmoid.configuration.startWith : 0
     property real preferredSidebarWidth: Math.max(footer.tabBar.implicitWidth, applicationsPage.implicitWidth) + kickoff.backgroundMetrics.spacing * 2
 
     // Raspored u RowLayout-u: 1. Desna strana (sada levo), 2. Aplikacije (sredina), 3. Levi meni / Sidebar (sada desno)
