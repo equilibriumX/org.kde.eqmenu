@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
  * HACK: disabled useless warnings from qmllint for stuff related to:
- *     - i18n*()
+ *      - i18n*()
 */
 
 pragma ComponentBehavior: Bound
@@ -31,6 +31,8 @@ KCM {
     property alias        cfg_isUpdateOnHover: isUpdateOnHover.checked
     property alias        cfg_appNameFormat: appNameFormat.currentIndex
     property alias        cfg_startWith: startWith.currentIndex
+    property alias        cfg_useCustomFilter: useCustomFilter.checked
+    property alias        cfg_historySubFilter: historySubFilter.currentIndex
     property alias        cfg_isPowerVisible: isPowerVisible.checked
     property alias        cfg_isSessionVisible: isSessionVisible.checked
     property alias        cfg_hasToolbarCaptions: hasToolbarCaptions.checked
@@ -97,6 +99,27 @@ KCM {
 
         KCMNote {
             text: i18nc("@info:startWith", "Select what is first visible when the launcher is opened.") // qmllint disable unqualified
+        }
+
+        // --- Opcije za History / Istoriju ---
+        QQC.CheckBox {
+            id: useCustomFilter
+            text: i18n("Use custom filter for history view")
+        }
+
+        QQC.ComboBox {
+            id: historySubFilter
+            visible: useCustomFilter.checked
+            Kirigami.FormData.label: i18n("Filter type:")
+            model: [
+                i18n("Applications only"),
+                i18n("Files only"),
+                i18n("Folders / Places only")
+            ]
+        }
+
+        KCMNote {
+            text: i18nc("@info:historyDefaultFilter", "Select which items are prioritized in the History view.") // qmllint disable unqualified
         }
 
         QQC.ComboBox { // appNameFormat
