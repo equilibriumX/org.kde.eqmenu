@@ -224,7 +224,7 @@ PlasmoidItem {
         readonly property var sizing: {
             const displayedIcon = imageFallback.visible ? imageFallback : (buttonIcon.valid ? buttonIcon : buttonIconFallback);
             const impWidth = 0
-                + (hasIcon  ? displayedIcon.width                                                                 : 0)
+                + (hasIcon  ? displayedIcon.width                                           : 0)
                 + (hasLabel ? iconLabel.contentWidth + iconLabel.Layout.leftMargin + iconLabel.Layout.rightMargin : 0)
             const impHeight = displayedIcon.height > 0 ? displayedIcon.height : iconSize
             // at least square, but can be wider/taller
